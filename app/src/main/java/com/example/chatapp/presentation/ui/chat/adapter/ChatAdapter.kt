@@ -9,7 +9,8 @@ import com.example.chatapp.databinding.MessageSenderItemLayoutBinding
 import com.example.chatapp.domain.model.ChatDomain
 import com.example.chatapp.util.ItemsDIffUtil
 
-class ChatAdapter : ListAdapter<ChatDomain, RecyclerView.ViewHolder>(ItemsDIffUtil()) {
+class ChatAdapter(private val user: String) :
+    ListAdapter<ChatDomain, RecyclerView.ViewHolder>(ItemsDIffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == MESSAGE_SENDER) {
             MessageSenderViewHolder(MessageSenderItemLayoutBinding.inflate(
@@ -21,7 +22,7 @@ class ChatAdapter : ListAdapter<ChatDomain, RecyclerView.ViewHolder>(ItemsDIffUt
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if () {
+        return if (user == getItem(position).user) {
             MESSAGE_SENDER
         } else {
             MESSAGE_RECEIVER
