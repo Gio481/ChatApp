@@ -2,6 +2,7 @@ package com.example.chatapp.presentation.ui.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.chatapp.data.service.broadcast.BroadcastService
 import com.example.chatapp.databinding.FragmentChatBinding
 import com.example.chatapp.presentation.base.BaseFragment
 import com.example.chatapp.presentation.ui.chat.viewmodel.ChatViewModel
@@ -13,6 +14,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>() {
         get() = FragmentChatBinding::inflate
 
     override fun getViewModelClass(): KClass<ChatViewModel> = ChatViewModel::class
+
+    override val broadcastService: BroadcastService = BroadcastService{}
 
     override fun onBindViewModel(viewModel: ChatViewModel) {}
 }
