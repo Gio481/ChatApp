@@ -31,7 +31,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getViewModel(clazz = getViewModelClass())
+        viewModel = getViewModel(clazz = getViewModelClass())
         registerReceiver(broadcastService)
     }
 
