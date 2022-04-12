@@ -40,6 +40,7 @@
         android:background="@color/dark_blue"
         android:hint="@string/send_message_hint"
         android:paddingHorizontal="@dimen/dimen_10_dp"
+        android:textColor="@color/grey"
         android:textColorHint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@id/attachFileView"
         app:layout_constraintEnd_toStartOf="@id/sendMessageButton"
