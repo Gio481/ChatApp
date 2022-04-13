@@ -1,5 +1,6 @@
 package com.example.chatapp.presentation.ui.chat.adapter
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.domain.model.ChatDomain
@@ -26,6 +27,7 @@ class ChatAdapter(private val user: String, private val util: RecyclerViewUtilCl
         util.onBind(holder, itemList, position)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newList: List<ChatDomain>) {
         this.itemList.clear()
         this.itemList.addAll(newList)

@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ChatDomain(
-    val id:Long? = null,
-    val user:String,
+    val id: Long? = null,
+    val user: String,
     val message: String,
     val time: String,
 ) : Parcelable
