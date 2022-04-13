@@ -30,20 +30,18 @@ class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
     fun sendMessage(user: String, message: String, action: (message: ChatDomain) -> Unit) {
         if (message.isNotBlank()) {
             val userMessage = ChatDomain(user = user, message = message, time = getTime())
+            insertMessage(user, message)
             action(userMessage)
+        } else {
+            _errorLiveData.postValue(R.string.blank_message_error_text)
         }
     }
 
-    fun insertMessage(user: String, message: String) {
+    private fun insertMessage(user: String, message: String) {
         viewModelScope.launch {
-            if (message.isNotBlank()) {
-                useCase.insertMessage(ChatDomain(user = user, message = message, time = getTime()))
-            } else {
-                _errorLiveData.postValue(R.string.blank_message_error_text)
-            }
+            useCase.insertMessage(ChatDomain(user = user, message = message, time = getTime()))
         }
     }
-
 
     @SuppressLint("SimpleDateFormat")
     private fun getTime(): String {

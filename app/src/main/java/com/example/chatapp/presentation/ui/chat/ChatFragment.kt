@@ -33,13 +33,12 @@ class ChatFragment(private val user: ChatUser) :
         setListener(viewModel)
         observeMessagesLiveData(viewModel)
         observeErrorLiveData(viewModel)
-        broadcastReceiverAction(viewModel)
+        broadcastReceiverAction()
     }
 
-    private fun broadcastReceiverAction(viewModel: ChatViewModel) {
+    private fun broadcastReceiverAction() {
         broadcastService.receiverAction = {
             messageAdapter.addSingleMessage(it)
-            viewModel.insertMessage(it.user, it.message)
             binding.messagesRecyclerView.scrollToPosition(messageAdapter.itemCount - 1)
         }
     }
@@ -78,8 +77,10 @@ class ChatFragment(private val user: ChatUser) :
     }
 
     private fun setUpRecycleView() {
+        val manager = LinearLayoutManager(requireContext())
         with(binding.messagesRecyclerView) {
-            layoutManager = LinearLayoutManager(requireContext())
+            manager.stackFromEnd = true
+            layoutManager = manager
             adapter = messageAdapter
         }
     }
