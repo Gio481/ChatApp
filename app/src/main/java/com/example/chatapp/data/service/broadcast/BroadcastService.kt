@@ -12,9 +12,8 @@ class BroadcastService : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == actionName) {
             val data = intent.getParcelableExtra<ChatDomain>(MESSAGE_SENDER_KEY)
-            if (data != null) {
-                receiverAction.invoke(data)
-            }
+            data?.let { receiverAction.invoke(it) }
+
         }
     }
 
