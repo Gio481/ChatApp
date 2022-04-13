@@ -9,12 +9,12 @@ import com.example.chatapp.databinding.FragmentChatBinding
 import com.example.chatapp.presentation.base.BaseFragment
 import com.example.chatapp.presentation.ui.chat.adapter.ChatAdapter
 import com.example.chatapp.presentation.ui.chat.adapter.util.RecyclerViewUtilClass
-import com.example.chatapp.presentation.ui.chat.adapter.util.RecyclerViewUtilClassImpl
 import com.example.chatapp.presentation.ui.chat.chat_user.ChatUser
 import com.example.chatapp.presentation.ui.chat.viewmodel.ChatViewModel
 import com.example.chatapp.util.Constants.MESSAGE_SENDER_KEY
 import com.example.chatapp.util.extensions.fragment.observer
 import com.example.chatapp.util.extensions.fragment.showToast
+import org.koin.android.ext.android.inject
 import kotlin.reflect.KClass
 
 class ChatFragment(private val user: ChatUser) :
@@ -25,7 +25,7 @@ class ChatFragment(private val user: ChatUser) :
 
     override fun getViewModelClass(): KClass<ChatViewModel> = ChatViewModel::class
 
-    private val util: RecyclerViewUtilClass by lazy { RecyclerViewUtilClassImpl() }
+    private val util by inject<RecyclerViewUtilClass>()
     private val messageAdapter by lazy { ChatAdapter(user.name, util) }
     override val broadcastService: BroadcastService = BroadcastService()
 

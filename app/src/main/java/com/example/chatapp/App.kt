@@ -15,7 +15,8 @@ class App : Application() {
                 entityMapperModule,
                 viewModelModule,
                 repositoryModule,
-                useCaseModule)
+                useCaseModule,
+                utilModule)
             )
         }
     }
