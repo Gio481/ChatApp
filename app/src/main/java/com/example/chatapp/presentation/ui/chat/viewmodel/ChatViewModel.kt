@@ -1,6 +1,5 @@
 package com.example.chatapp.presentation.ui.chat.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.chatapp.R
 import com.example.chatapp.domain.model.ChatDomain
 import com.example.chatapp.domain.usecase.GetMessagesUseCase
+import com.example.chatapp.util.extensions.calendar.getFormattedDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
@@ -29,7 +28,9 @@ class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
 
     fun sendMessage(user: String, message: String, action: (message: ChatDomain) -> Unit) {
         if (message.isNotBlank()) {
-            val userMessage = ChatDomain(user = user, message = message, time = getTime())
+            val userMessage = ChatDomain(user = user,
+                message = message,
+                time = Calendar.getInstance().getFormattedDate())
             insertMessage(user, message)
             action(userMessage)
         } else {
@@ -39,13 +40,9 @@ class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
 
     private fun insertMessage(user: String, message: String) {
         viewModelScope.launch {
-            useCase.insertMessage(ChatDomain(user = user, message = message, time = getTime()))
+            useCase.insertMessage(ChatDomain(user = user,
+                message = message,
+                time = Calendar.getInstance().getFormattedDate()))
         }
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getTime(): String {
-        val sdf = SimpleDateFormat("MMM dd, HH:mm")
-        return sdf.format(Calendar.getInstance().time)
     }
 }
