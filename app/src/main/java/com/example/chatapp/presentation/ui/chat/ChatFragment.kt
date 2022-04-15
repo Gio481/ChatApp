@@ -1,6 +1,5 @@
 package com.example.chatapp.presentation.ui.chat
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.example.chatapp.presentation.ui.chat.adapter.ChatAdapter
 import com.example.chatapp.presentation.ui.chat.adapter.util.RecyclerViewUtilClass
 import com.example.chatapp.presentation.ui.chat.chat_user.ChatUser
 import com.example.chatapp.presentation.ui.chat.viewmodel.ChatViewModel
-import com.example.chatapp.util.Constants.MESSAGE_SENDER_KEY
 import com.example.chatapp.util.extensions.fragment.observer
 import com.example.chatapp.util.extensions.fragment.showToast
 import org.koin.android.ext.android.inject
@@ -35,6 +33,7 @@ class ChatFragment(private val user: ChatUser) :
         setListener(viewModel)
         observeMessagesLiveData(viewModel)
         observeErrorLiveData(viewModel)
+        observeBroadcastLiveData(viewModel)
         broadcastReceiverAction()
     }
 
@@ -57,25 +56,22 @@ class ChatFragment(private val user: ChatUser) :
         }
     }
 
-    private fun setListener(viewModel: ChatViewModel) {
-        binding.sendMessageButton.setOnClickListener {
-            sendBroadcast(viewModel)
-        }
-    }
-
-    private fun sendBroadcast(viewModel: ChatViewModel) {
-        viewModel.sendMessage(user.name, binding.messageEditText.text.toString()) {
-            intent {
-                action = broadcastService.actionName
-                putExtra(MESSAGE_SENDER_KEY, it)
-                requireActivity().sendBroadcast(this)
+    private fun observeBroadcastLiveData(viewModel: ChatViewModel) {
+        observer(viewModel.broadcastLiveData) {
+            requireActivity().sendBroadcast(it)
+            with(binding.messageEditText) {
+                viewModel.insertMessage(user.name, text.toString())
+                text = null
             }
-            binding.messageEditText.text = null
         }
     }
 
-    private fun intent(block: Intent.() -> Unit): Intent {
-        return Intent().apply(block)
+    private fun setListener(viewModel: ChatViewModel) {
+        with(binding) {
+            sendMessageButton.setOnClickListener {
+                viewModel.sendMessage(user.name, messageEditText.text.toString())
+            }
+        }
     }
 
     private fun setUpRecycleView() {

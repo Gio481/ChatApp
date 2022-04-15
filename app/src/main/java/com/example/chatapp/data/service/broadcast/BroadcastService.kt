@@ -18,6 +18,6 @@ class BroadcastService : BroadcastReceiver() {
     }
 
     companion object {
-        private const val INTENT_ACTION_NAME = "messagesBroadcast"
+        const val INTENT_ACTION_NAME = "messagesBroadcast"
     }
 }
