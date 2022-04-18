@@ -7,7 +7,7 @@ class EntityMapperImpl : EntityMapper<ChatEntity, ChatDomain> {
 
     override fun fromEntity(entity: List<ChatEntity>): List<ChatDomain> {
         return entity.map {
-            ChatDomain(id = it.id, user = it.user, message = it.message, time = it.time)
+            ChatDomain(user = it.user, message = it.message, time = it.time)
         }
     }
 

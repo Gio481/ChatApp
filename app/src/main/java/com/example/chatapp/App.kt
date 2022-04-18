@@ -1,9 +1,7 @@
 package com.example.chatapp
 
 import android.app.Application
-import com.example.chatapp.di.databaseModule
-import com.example.chatapp.di.entityMapperModule
-import com.example.chatapp.di.viewModelModule
+import com.example.chatapp.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,7 +10,14 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(listOf(databaseModule, entityMapperModule, viewModelModule))
+            modules(listOf(
+                databaseModule,
+                entityMapperModule,
+                viewModelModule,
+                repositoryModule,
+                useCaseModule,
+                utilModule)
+            )
         }
     }
 }

@@ -41,6 +41,8 @@ dependencies {
     def koinVersion = "3.1.5"
     def coroutineVersion = '1.5.2'
     def coroutinePlayServiceVersion = '1.4.0'
+    def lifecycleVersion = '2.4.1'
+    def lifecycleExtensionVersion = '2.2.0'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -59,6 +61,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinePlayServiceVersion"
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
 
     //Room
     implementation "androidx.room:room-runtime:$roomVersion"
