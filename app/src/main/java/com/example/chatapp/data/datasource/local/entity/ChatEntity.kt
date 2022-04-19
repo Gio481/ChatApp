@@ -8,5 +8,5 @@ data class ChatEntity(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
     val user: String,
     val message: String,
-    val time: String,
+    val time: Long?,
 )
