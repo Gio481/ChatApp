@@ -13,7 +13,7 @@ class MessageSenderViewHolder(private val binding: MessageSenderItemLayoutBindin
         with(binding) {
             messageTextView.text = chatDomain.message
             timeTextView.text = chatDomain.time?.getStringDate()
-            timeTextView.isVisible = chatDomain.time == null
+            timeTextView.isVisible = chatDomain.time != null
         }
     }
 }
@@ -24,7 +24,7 @@ class MessageReceiverViewHolder(private val binding: MessageReceiverItemLayoutBi
         with(binding) {
             messageTextView.text = chatDomain.message
             timeTextView.text = chatDomain.time?.getStringDate()
-            timeTextView.isVisible = chatDomain.time == null
+            timeTextView.isVisible = chatDomain.time != null
         }
     }
 }
