@@ -10,10 +10,9 @@ import com.example.chatapp.data.service.broadcast.BroadcastService
 import com.example.chatapp.domain.model.ChatDomain
 import com.example.chatapp.domain.usecase.GetMessagesUseCase
 import com.example.chatapp.util.Constants.MESSAGE_SENDER_KEY
-import com.example.chatapp.util.extensions.calendar.getFormattedDate
+import com.example.chatapp.util.extensions.long.differenceMinutesFrom
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
 
@@ -26,6 +25,8 @@ class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
     private val _broadcastLiveData: MutableLiveData<Intent> = MutableLiveData()
     val broadcastLiveData: LiveData<Intent> = _broadcastLiveData
 
+    private var minutesBetweenDates: Long = DEFAULT_VALUE
+
     fun getAllMessages() {
         viewModelScope.launch(Dispatchers.IO) {
             _chatLiveData.postValue(useCase.getAllMessages())
@@ -33,29 +34,43 @@ class ChatViewModel(private val useCase: GetMessagesUseCase) : ViewModel() {
     }
 
     fun insertMessage(user: String, message: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             useCase.insertMessage(ChatDomain(user = user,
                 message = message,
-                time = Calendar.getInstance().getFormattedDate()))
+                time = getTime()))
         }
     }
 
     fun sendMessage(user: String, message: String) {
         if (message.isNotBlank()) {
-            val intent = intent {
-                action = BroadcastService.INTENT_ACTION_NAME
-                putExtra(MESSAGE_SENDER_KEY,
-                    ChatDomain(user = user,
-                        message = message,
-                        time = Calendar.getInstance().getFormattedDate()))
+            viewModelScope.launch {
+                val intent = Intent().apply {
+                    action = BroadcastService.INTENT_ACTION_NAME
+                    putExtra(MESSAGE_SENDER_KEY,
+                        ChatDomain(user = user, message = message, time = getTime()))
+                }
+                _broadcastLiveData.postValue(intent)
             }
-            _broadcastLiveData.postValue(intent)
         } else {
             _errorLiveData.postValue(R.string.blank_message_error_text)
         }
     }
 
-    private fun intent(block: Intent.() -> Unit): Intent {
-        return Intent().apply(block)
+
+    private suspend fun getTime(): Long? {
+        if (useCase.getAllMessages().isNotEmpty()) {
+            minutesBetweenDates =
+                (useCase.getTime())?.differenceMinutesFrom(System.currentTimeMillis())!!
+        }
+        return if (minutesBetweenDates <= MINUTES_TO_SHOW_DATE) {
+            null
+        } else {
+            System.currentTimeMillis()
+        }
+    }
+
+    companion object {
+        private const val DEFAULT_VALUE = 50L
+        private const val MINUTES_TO_SHOW_DATE = 10
     }
 }

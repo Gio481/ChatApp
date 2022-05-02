@@ -13,4 +13,8 @@ interface ChatDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMessage(message: ChatEntity)
+
+    @Query("SELECT time FROM chat  ORDER BY time DESC LIMIT 1")
+    suspend fun getTime(): Long?
+
 }

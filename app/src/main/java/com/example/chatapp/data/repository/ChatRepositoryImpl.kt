@@ -16,4 +16,6 @@ class ChatRepositoryImpl(
 
     override suspend fun insertMessage(message: ChatDomain) =
         dao.insertMessage(entityMapper.toEntity(message))
+
+    override suspend fun getTime(): Long? = dao.getTime()
 }
