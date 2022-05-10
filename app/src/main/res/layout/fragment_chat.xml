@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".presentation.ui.chat.ChatFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0_dp"
+        android:layout_margin="@dimen/dimen_25_dp"
+        app:layout_constraintBottom_toTopOf="@id/messageEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1_dp"
+        android:layout_marginBottom="@dimen/dimen_15_dp"
+        android:background="@color/dark_blue_700"
+        app:layout_constraintBottom_toTopOf="@id/attachFileView" />
+
+    <View
+        android:id="@+id/attachFileView"
+        android:layout_width="@dimen/dimen_30_dp"
+        android:layout_height="@dimen/dimen_30_dp"
+        android:layout_marginHorizontal="@dimen/dimen_25_dp"
+        android:layout_marginVertical="@dimen/dimen_15_dp"
+        android:background="@drawable/ic_attach_file"
+        android:rotation="40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/messageEditText"
+        android:layout_width="@dimen/dimen_0_dp"
+        android:layout_height="@dimen/dimen_30_dp"
+        android:background="@color/dark_blue"
+        android:hint="@string/send_message_hint"
+        android:paddingHorizontal="@dimen/dimen_10_dp"
+        android:textColor="@color/grey"
+        android:textColorHint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="@id/attachFileView"
+        app:layout_constraintEnd_toStartOf="@id/sendMessageButton"
+        app:layout_constraintStart_toEndOf="@id/attachFileView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sendMessageButton"
+        android:layout_width="@dimen/dimen_35_dp"
+        android:layout_height="@dimen/dimen_35_dp"
+        android:layout_marginHorizontal="@dimen/dimen_25_dp"
+        android:background="@drawable/send_message_button_background"
+        android:drawableStart="@drawable/ic_send_message"
+        android:paddingHorizontal="@dimen/dimen_5_dp"
+        app:layout_constraintBottom_toBottomOf="@id/attachFileView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

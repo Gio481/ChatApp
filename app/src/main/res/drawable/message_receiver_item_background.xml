@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1F3C53" />
+            <corners android:bottomRightRadius="@dimen/dimen_20_dp" android:topLeftRadius="@dimen/dimen_20_dp" android:topRightRadius="@dimen/dimen_20_dp" />
+        </shape>
+    </item>
+</selector>
